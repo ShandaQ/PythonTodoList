@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div id="add_task" class="col-xs-6">
+      <form action="/add_task" method="POST">
+        <p>
+          <label for="content">Content</label><br>
+          <textarea name="content" rows="6" cols="40"></textarea>
+        </p>
+        <p>
+          <label for="completion_date">Due Date</label><br>
+          <input type="date" size="100" name="completion_date">
+        </p>
+        <p>
+          <button class="btn btn-primary" type="subimt">Add Task</button>
+        </p>
+      </form>
+    </div>
+    <div id="list" class="col-xs-6">
+      <h2>Uncompleted Tasks: {{undone_Task}}</h2>
+      <form action="edit_tasks" method="POST">
+        <ul>
+          {% for task in tasks %}
+            {% if task.complete == True %}
+            <li class="completed">
+              <input type="checkbox" name="{{task.id}}">
+              {{task.id}} - {{task.content}} - {{task.completiondate}}
+            </li>
+            {% else%}
+            <li>
+              <input type="checkbox" name="{{task.id}}">
+              {{task.id}} - {{task.content}} - {{task.completiondate}}
+            </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+        <button class="btn btn-primary" type="submit" name="complete">Mark Complete</button>
+        <button class="btn btn-primary" type="submit" name="notComplete">Not Completed</button>
+        <button class="btn btn-primary" type="submit" name="delete">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
